@@ -1,0 +1,13 @@
+---
+date: '2016-03-03T01:51:58.059533'
+questions: what is the difference between attributes and product description?
+ideas:
+    - break down product description and search terms into bag of words
+    - want to have some kind of interaction that notes if the words show up in both categories or not
+
+    - instead of counting bags of words, could just try factor for not in either, in search term only, in description only, in both
+
+potential issues: 
+    - Data could be too sparse or too few search both terms 
+    - how to model response? numbers need to be between 1 and 3 but continuous. Beta regression?
+todo: need some summary stats...
