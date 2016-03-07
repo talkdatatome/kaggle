@@ -4,10 +4,31 @@ questions: what is the difference between attributes and product description?
 ideas:
     - break down product description and search terms into bag of words
     - want to have some kind of interaction that notes if the words show up in both categories or not
-
+    - bigram pairing words from Description.search?
     - instead of counting bags of words, could just try factor for not in either, in search term only, in description only, in both
 
 potential issues: 
     - Data could be too sparse or too few search both terms 
     - how to model response? numbers need to be between 1 and 3 but continuous. Beta regression?
 todo: need some summary stats...
+---
+thoughts: product description has more info but it seems to be poorly formatted. words stuck together, etc
+date: '2016-03-06T22:09:16.618509' 
+ideas: 
+    - break down product description and search terms into bag of words
+    - want to have some kind of interaction that notes if the words show up in both categories or not
+    - bigram pairing words from Description.search?
+    - instead of counting bags of words, could just try factor for not in either, in search term only, in description only, in both
+    - pair words from attributes and search query
+    - word freq for individual words in document, individual words in search, 
+and pairings
+    - there are 86264 unique items in attribute.csv
+    - there are 124428 unique id's in product_description.csv (e.g. if not in attributes, then use product_description.csv
+    - there are 54667 unique items in the training data
+    - there are 97460 unique items in the test data
+    - around 38000 of the products in the attributes.csv file are in the training set
+    - about 70% of the training data has values in the attributes file
+    - 27699 items are in common between test and train dataset
+    - 72k of the 90k test products have attributes
+    - Use attribute data if it exists first, then use description if it doesn't exist
+    - All have a description
