@@ -24,7 +24,7 @@ baseDataCleaning <- function(corpus_ST){
   myCorpus <- tm_map(myCorpus, removePunctuation)
   for(j in seq(myCorpus))   
   {   
-    myCorpus[[j]] <- gsub("@", " ", myCorpus[[j]])   
+    myCorpus[[j]]$content <- gsub("@", " ", myCorpus[[j]]$content)   
   } 
   # remove numbers
   #myCorpus <- tm_map(myCorpus, removeNumbers)
@@ -33,7 +33,7 @@ baseDataCleaning <- function(corpus_ST){
   myStopwords <- remove[-143]
   myCorpus <- tm_map(myCorpus, removeWords, myStopwords)
   # Elminate Extra Whitespace #
-  myCorpus <- tm_map(corpus_ST, stripWhitespace)
+  myCorpus <- tm_map(myCorpus, stripWhitespace)
   
   myCorpus
 }
@@ -58,7 +58,8 @@ library(dplyr)
 options(header=F, stringsAsFactors=F)
 
 # Set working directory 
-setwd("C:/Users/campje01/Desktop/Home Depot/Data ") 
+#setwd("C:/Users/campje01/Desktop/Home Depot/Data ") 
+setwd("~/KAGGLE/HOMEDEPOT/")
 
 # Load the data
 mydata <- read.csv("train.csv", header=T)
@@ -66,19 +67,20 @@ corpus_ST <- Corpus(VectorSource(mydata$search_term))
 myCorpus <- baseDataCleaning(corpus_ST)
 dtm_ST <- CleanedCorpusToDTM(myCorpus)
 
+mydata_desc <- read.csv("product_descriptions.csv", header=T)
+merged_data <- merge(mydata,mydata_desc,by="product_uid",all.x = TRUE)
+
 save.image("baseDataPrep.RData")
 
-corpus_PT <- Corpus(VectorSource(mydata$product_title))
+corpus_PT <- Corpus(VectorSource(merged_data$product_title))
 myCorpus_PT <- baseDataCleaning(corpus_PT)
 dtm_PT <- CleanedCorpusToDTM(myCorpus_PT)
 
 
-mydata_desc <- read.csv("product_descriptions.csv", header=T)
-merged_data <- merge(mydata,mydata_desc,by="product_uid",all.x = TRUE)
-
-corpus_DS <- Corpus(VectorSource(mydata$product_description))
+corpus_DS <- Corpus(VectorSource(merged_data$product_description))
 myCorpus_DS <- baseDataCleaning(corpus_DS)
 dtm_DS <- CleanedCorpusToDTM(myCorpus_DS)
 
 
+save.image("step2.RData")
 
